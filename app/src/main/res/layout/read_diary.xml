@@ -39,10 +39,71 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <WebView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/webView"/>
+                    android:layout_marginLeft="30dp"
+                    android:text="위치"
+                    android:textSize="25dp"
+                    android:textColor="#000000"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp">
+                    <EditText
+                        android:id="@+id/edtLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                    <Button
+                        android:id="@+id/btnSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:text="검색"/>
+                </LinearLayout>
+                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/map_fragment"
+                    android:name="com.google.android.gms.maps.MapFragment"
+                    map:cameraTargetLat="37.541"
+                    map:cameraTargetLng="126.986"
+                    map:cameraZoom="10"
+                    tools:layout="@layout/basicscreen_main" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+                <Button
+                    android:id="@+id/btnZoomIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="확대"
+                    android:layout_weight="1"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_gravity="bottom|center"
+                    android:background="#555555"
+                    android:textColor="#ffffff"/>
+                <Button
+                    android:id="@+id/btnZoomOut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="축소"
+                    android:layout_marginRight="30dp"
+                    android:layout_gravity="bottom|center"
+                    android:background="#555555"
+                    android:textColor="#ffffff"/>
+                </LinearLayout>
 
             </LinearLayout>
             <LinearLayout
@@ -63,12 +124,14 @@
                   android:layout_height="250dp"
                   android:layout_marginLeft="30dp"
                   android:layout_marginRight="30dp"
+                  android:layout_marginBottom="20dp"
                   tools:ignore="SpeakableTextPresentCheck"
                   android:background="@drawable/edit_text_border"/>
 
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,6 +142,7 @@
             android:layout_height="wrap_content"
             android:text="돌아가기"
             android:layout_weight="1"
+            android:layout_marginRight="2dp"
             android:layout_gravity="bottom|center"
             android:background="#555555"
             android:textColor="#ffffff"/>

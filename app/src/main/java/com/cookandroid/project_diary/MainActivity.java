@@ -46,11 +46,14 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "아이디가 없습니다.", Toast.LENGTH_SHORT).show();
                 }else {   // 아이디가 맞을 때
                     String pwd = checkPassword(id);
-                    if(passwd.equals(pwd)){ //비밀번호가 맞다면
+                    if (passwd.equals(pwd)) { //비밀번호가 맞다면
                         Intent intent = new Intent(MainActivity.this, BasicScreen.class);
                         // id정보 전송
                         intent.putExtra("ID", id);
                         startActivity(intent);
+                    }else if(passwd.isEmpty()){
+                        Toast.makeText(getApplicationContext(), "비밀번호를 입력하세요.",
+                                Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(getApplicationContext(), "비밀번호가 틀립니다.",
                                 Toast.LENGTH_SHORT).show();
