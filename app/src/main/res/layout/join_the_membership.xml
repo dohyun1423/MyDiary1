@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".SaveIdActivity"
     android:layout_width="match_parent"
@@ -14,7 +13,8 @@
         android:layout_marginTop="80dp"
         android:text="회원가입"
         android:textColor="#000000"
-        android:textSize="50dp"/>
+        android:textSize="60dp"
+        android:fontFamily="@font/bmyeonsung_ttf"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,13 +27,16 @@
             android:layout_marginLeft="50dp"
             android:text="아이디"
             android:textColor="#000000"
-            android:textSize="25dp" />
+            android:textSize="30dp"
+            android:fontFamily="@font/bmyeonsung_ttf"/>
         <EditText
             android:id="@+id/edtJoinId"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginLeft="50dp"
-            android:hint="아이디를 입력하세요" />
+            android:hint="아이디를 입력하세요"
+            android:textSize="18dp"
+            android:fontFamily="@font/bmyeonsung_ttf"/>
 
     </LinearLayout>
     <LinearLayout
@@ -47,13 +50,16 @@
             android:layout_marginLeft="50dp"
             android:text="비밀번호"
             android:textColor="#000000"
-            android:textSize="25dp" />
+            android:textSize="30dp"
+            android:fontFamily="@font/bmyeonsung_ttf"/>
         <EditText
             android:id="@+id/edtJoinPasswd"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginLeft="50dp"
-            android:hint="비밀번호를 입력하세요" />
+            android:hint="비밀번호를 입력하세요"
+            android:textSize="18dp"
+            android:fontFamily="@font/bmyeonsung_ttf"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -67,13 +73,17 @@
             android:text="돌아가기"
             android:layout_marginLeft="130dp"
             android:layout_marginRight="20dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:textSize="18dp"
+            android:fontFamily="@font/bmyeonsung_ttf"/>
         <TextView
             android:id="@+id/searchPwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="비밀번호 찾기"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:textSize="18dp"
+            android:fontFamily="@font/bmyeonsung_ttf"/>
     </LinearLayout>
         <Button
             android:id="@+id/btnJoinMember"
@@ -83,5 +93,7 @@
             android:layout_marginTop="5dp"
             android:layout_gravity="center_horizontal"
             android:background="#555555"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:fontFamily="@font/bmyeonsung_ttf"/>
 </LinearLayout>

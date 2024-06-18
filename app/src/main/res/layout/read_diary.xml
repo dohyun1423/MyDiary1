@@ -24,15 +24,17 @@
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="30dp"
                   android:text="날짜"
-                  android:textSize="25dp"
-                  android:textColor="#000000"/>
+                  android:textSize="30dp"
+                  android:textColor="#000000"
+                  android:fontFamily="@font/bmyeonsung_ttf"/>
               <TextView
                   android:id="@+id/selectDate"
                   android:layout_width="300dp"
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="30dp"
-                  android:textSize="20dp"
-                  android:textColor="#000000"/>
+                  android:textSize="25dp"
+                  android:textColor="#000000"
+                  android:fontFamily="@font/bmyeonsung_ttf"/>
 
             </LinearLayout>
             <LinearLayout
@@ -44,8 +46,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:text="위치"
-                    android:textSize="25dp"
-                    android:textColor="#000000"/>
+                    android:textSize="30dp"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/bmyeonsung_ttf"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -56,13 +59,16 @@
                         android:id="@+id/edtLocation"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        tools:ignore="SpeakableTextPresentCheck"/>
                     <Button
                         android:id="@+id/btnSearch"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
-                        android:text="검색"/>
+                        android:text="검색"
+                        android:textSize="18dp"
+                        android:fontFamily="@font/bmyeonsung_ttf"/>
                 </LinearLayout>
                 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -92,7 +98,9 @@
                     android:layout_marginLeft="30dp"
                     android:layout_gravity="bottom|center"
                     android:background="#555555"
-                    android:textColor="#ffffff"/>
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/bmyeonsung_ttf"/>
                 <Button
                     android:id="@+id/btnZoomOut"
                     android:layout_width="match_parent"
@@ -102,7 +110,9 @@
                     android:layout_marginRight="30dp"
                     android:layout_gravity="bottom|center"
                     android:background="#555555"
-                    android:textColor="#ffffff"/>
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/bmyeonsung_ttf"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -116,8 +126,9 @@
                   android:layout_height="wrap_content"
                   android:text="일기 작성"
                   android:layout_marginLeft="30dp"
-                  android:textSize="25dp"
-                  android:textColor="#000000"/>
+                  android:textSize="30dp"
+                  android:textColor="#000000"
+                  android:fontFamily="@font/bmyeonsung_ttf"/>
               <EditText
                   android:id="@+id/edtDiary"
                   android:layout_width="match_parent"
@@ -126,6 +137,8 @@
                   android:layout_marginRight="30dp"
                   android:layout_marginBottom="20dp"
                   tools:ignore="SpeakableTextPresentCheck"
+                  android:textSize="18dp"
+                  android:fontFamily="@font/bmyeonsung_ttf"
                   android:background="@drawable/edit_text_border"/>
 
             </LinearLayout>
@@ -145,7 +158,9 @@
             android:layout_marginRight="2dp"
             android:layout_gravity="bottom|center"
             android:background="#555555"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:fontFamily="@font/bmyeonsung_ttf"/>
         <Button
             android:id="@+id/btnWrite"
             android:layout_width="match_parent"
@@ -154,6 +169,8 @@
             android:text="등록하기"
             android:layout_gravity="bottom|center"
             android:background="#555555"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:fontFamily="@font/bmyeonsung_ttf"/>
     </LinearLayout>
 </LinearLayout>

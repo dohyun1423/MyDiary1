@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--bold-->
+    <font
+        android:font="@font/bmyeonsung_ttf"
+        android:fontStyle="normal"
+        android:fontWeight="800"
+        app:font="@font/bmyeonsung_ttf"
+        app:fontStyle="normal"
+        app:fontWeight="800" />
+    <!--medium-->
+    <font
+        android:font="@font/bmyeonsung_ttf"
+        android:fontStyle="normal"
+        android:fontWeight="500"
+        app:font="@font/bmyeonsung_ttf"
+        app:fontStyle="normal"
+        app:fontWeight="500" />
+    <!--regular-->
+    <font
+        android:font="@font/bmyeonsung_ttf"
+        android:fontStyle="normal"
+        android:fontWeight="300"
+        app:font="@font/bmyeonsung_ttf"
+        app:fontStyle="normal"
+        app:fontWeight="300" />
+
+</font-family>

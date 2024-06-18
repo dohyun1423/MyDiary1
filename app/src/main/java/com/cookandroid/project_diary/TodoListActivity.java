@@ -107,7 +107,7 @@ public class TodoListActivity extends AppCompatActivity {
         btnToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(edtToDo.getText() == null || time == null){
+                if(edtToDo.getText() == null || time == null || color == null){
                     if(edtToDo.getText() == null){
                         Toast.makeText(getApplicationContext(), "일정을 입력하세요",
                                 Toast.LENGTH_SHORT).show();
@@ -115,6 +115,11 @@ public class TodoListActivity extends AppCompatActivity {
                     }
                     if(time == null){
                         Toast.makeText(getApplicationContext(), "시간을 입력하세요",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(color == null){
+                        Toast.makeText(getApplicationContext(), "색을 입력하세요",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }

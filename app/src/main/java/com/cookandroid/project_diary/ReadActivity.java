@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -60,6 +59,8 @@ public class ReadActivity<PlacesClient, FindCurrentPlaceRequest> extends AppComp
         sDay = getIntent().getStringExtra("selectDay");
         sDate = sYear + "_" + sMonth + "_" + sDay;
         selectDate.setText(sDate);
+
+// 변수 초기화 및 날짜 저장
 //-------------------------------------------------------------------------------------------------------------
         // SupportMapFragment를 초기화합니다.
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -67,65 +68,63 @@ public class ReadActivity<PlacesClient, FindCurrentPlaceRequest> extends AppComp
         if (mapFragment == null) {
             mapFragment = SupportMapFragment.newInstance();
             fragmentManager.beginTransaction().replace(R.id.map_fragment, mapFragment).commit();
+        }else{
+            initMap();
         }
 
-        // 지도 초기 설정
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                mMap = googleMap;
-                // mMap을 사용하여 지도와 관련된 작업을 수행할 수 있습니다.
-                // 예를 들어, 마커를 추가하려면 다음과 같이 합니다.
-                LatLng seoul = new LatLng(37.5665, 126.9780);
-                mMap.addMarker(new MarkerOptions().position(seoul).title("Seoul"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(seoul));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(seoul, 15));
-                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-            }
-        });
 
         // 구글맵에 검색한 위치 띄우기
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 입력된 위치 가져오기
-                String location = edtLocation.getText().toString().trim();
-                // 위치가 비어 있는지 확인
-                if (location.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "검색할 위치를 입력하세요", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                // 위치를 이용하여 지도에 마커 표시
-                showLocationOnMap(location);
+                // 위치를 설정하는 메소드
+                showLocation(edtLocation);
             }
         });
-
+        // 줌인
         btnZoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mMap.animateCamera(CameraUpdateFactory.zoomIn());
             }
         });
-
+        // 줌아웃
         btnZoomOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mMap.animateCamera(CameraUpdateFactory.zoomOut());
             }
         });
+// 지도        
 //-------------------------------------------------------------------------------------------------------------
-        // 일기 읽어오기
+// 저장, 뒤로가기 버튼 // 일기에 저장된 내용 읽어오기
         id = getIntent().getStringExtra("ID");
-        File folder = new File(getFilesDir(), "ID/" + id + "/diary");
-        if (!folder.exists()) { //폴더가 없다면 폴더 생성
-            boolean result = folder.mkdirs();
+        // diary 폴더
+        File folderDi = new File(getFilesDir(), "ID/" + id + "/diary");
+        if (!folderDi.exists()) { //폴더가 없다면 폴더 생성
+            boolean result = folderDi.mkdirs();
         }
-        File file = new File(getFilesDir(), "ID/" + id + "/diary/" + sDate + ".txt");
-        // 파일이 있다면
-        if (file.exists()){    //원래 적힌 일기 읽어오기
-            String diaryLog = readDiary(file.toString());
+        // 일기 읽어오기
+        File fileDi = new File(folderDi + "/" + sDate + ".txt");
+        // 저장된 일기 파일이 있다면
+        if (fileDi.exists()){    //원래 적힌 일기 읽어오기
+            String diaryLog = readDiary(fileDi.toString());
             edtDiary.setText(diaryLog);
+        }
+
+        // Location 폴더
+        File folderLoc = new File(getFilesDir(), "ID/" + id + "/Location");
+        if (!folderLoc.exists()) { //폴더가 없다면 폴더 생성
+            boolean result1 = folderLoc.mkdirs();
+        }
+        // 저장된 위치 읽어오기
+        File fileLoc = new File(folderLoc + "/" + sDate + "_" +
+                edtLocation.getText().toString() + ".txt");
+        // 저장된 위치 파일이 있다면
+        if(fileLoc.exists()){   // 위치와 지도에 표시
+            String diaryLoc = readDiary(fileLoc.toString());
+            edtLocation.setText(diaryLoc);
+            showLocationOnMap(edtLocation.getText().toString().trim());
         }
 
         //뒤로 돌아가기
@@ -142,20 +141,32 @@ public class ReadActivity<PlacesClient, FindCurrentPlaceRequest> extends AppComp
         btnWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 모두 입력해야함
+                // 일기 검사
                 if(edtDiary.getText() == null) {
                     Toast.makeText(getApplicationContext(), "일기를 입력하세요",
                             Toast.LENGTH_SHORT).show();
                 }else{
                     try {
                         String diaryStr = edtDiary.getText().toString();
-                        FileOutputStream fos = new FileOutputStream(file);
-                        fos.write(diaryStr.getBytes());
-                        fos.close();
+                        FileOutputStream fosDi = new FileOutputStream(fileDi);
+                        fosDi.write(diaryStr.getBytes());
+                        fosDi.close();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
+                // 위치 검사 입력이 있을 때만 실행
+                if(edtLocation.getText() != null){
+                    try {
+                        String diaryLoc = edtLocation.getText().toString().trim();
+                        FileOutputStream fosLoc = new FileOutputStream(fileLoc);
+                        fosLoc.write(diaryLoc.getBytes());
+                        fosLoc.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
                 Intent intent = new Intent(ReadActivity.this,
                         BasicScreen.class);
                 intent.putExtra("ID", id);
@@ -163,20 +174,41 @@ public class ReadActivity<PlacesClient, FindCurrentPlaceRequest> extends AppComp
             }
         });
     }
-// onCreate
+//---------------------------------------------------------------------------------------------------------
+    // 일기에 저장된 내용을 출력하는 메소드
+    String readDiary(String fName){
+        String Str = null;
+        FileInputStream inFs;
+        try{
+            inFs = new FileInputStream(fName);
+            byte[] txt = new byte[3000];
+            inFs.read(txt);
+            inFs.close();
+            Str = (new String(txt)).trim();
+        }catch (IOException ignored){
+        }
+        return Str;
+    }
 //-------------------------------------------------------------------------------------------------------------
+// 지도 설정 메소드
     // 지도 초기화
     private void initMap() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_fragment);
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                mMap = googleMap;
-            }
-        });
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap googleMap) {
+                    mMap = googleMap;
+                    LatLng seoul = new LatLng(37.5665, 126.9780);
+                    mMap.addMarker(new MarkerOptions().position(seoul).title("Seoul"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(seoul));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(seoul, 20));
+                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                }
+            });
+        }
     }
 
-    // 위치를 받아 지도에 표시하는 메서드
+    // 위치를 받아 지도에 표시하는 메소드
     private void showLocationOnMap(String location) {
         if (mMap != null) {
             Geocoder geocoder = new Geocoder(this);
@@ -201,20 +233,16 @@ public class ReadActivity<PlacesClient, FindCurrentPlaceRequest> extends AppComp
             initMap();
         }
     }
-//---------------------------------------------------------------------------------------------------------
-    // 일기를 출력하는 메소드
-    String readDiary(String fName){
-        String diaryStr = null;
-        FileInputStream inFs;
-        try{
-            inFs = new FileInputStream(fName);
-            byte[] txt = new byte[3000];
-            inFs.read(txt);
-            inFs.close();
-            diaryStr = (new String(txt)).trim();
-        }catch (IOException ignored){
+    // 위치를 표시하는 메소드
+    private void showLocation(EditText edtLocaiton) {
+        // 입력된 위치 가져오기
+        String location = edtLocation.getText().toString().trim();
+        // 위치가 비어 있는지 확인
+        if (location == null) {
+            Toast.makeText(getApplicationContext(), "검색할 위치를 입력하세요", Toast.LENGTH_SHORT).show();
+            return;
         }
-        return diaryStr;
+        // 위치를 이용하여 지도에 마커 표시
+        showLocationOnMap(location);
     }
-
 }

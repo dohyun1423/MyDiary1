@@ -3,6 +3,7 @@ package com.cookandroid.project_diary;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -155,16 +156,19 @@ public class BasicScreen extends AppCompatActivity {
                 String list = line[i+2];
                 // textview 추가
                 TextView view1 = new TextView(this);
-                String str = time + " : " + list;
+                String str = time + "   |   " + list;
                 //view1 설정
                 view1.setText(str);
                 view1.setBackgroundColor(Color.parseColor(color));
                 view1.setTextSize(20);
+                Typeface typeFace = Typeface.createFromAsset(getAssets(),"bmyeonsung_ttf.ttf");
+                view1.setTypeface(typeFace);
+                view1.setHeight(100);
                 view1.setPadding(10,10,10,10);
                 view1.setTextColor(Color.BLACK);
 
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams
-                        .WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        .MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp.gravity = Gravity.CENTER;
                 view1.setLayoutParams(lp);
 
