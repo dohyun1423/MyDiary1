@@ -3,6 +3,9 @@ package com.cookandroid.project_diary;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,9 +22,10 @@ import java.io.IOException;
 public class ReadActivity extends AppCompatActivity {
 
     TextView selectDate;
-    EditText edtDiary, edtLocation;
+    EditText edtDiary;
     Button btnWrite, btnBack;
     String id, sYear,sMonth,sDay,sDate;
+    WebView web;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -30,9 +34,9 @@ public class ReadActivity extends AppCompatActivity {
 
         selectDate = (TextView) findViewById(R.id.selectDate);
         edtDiary = (EditText) findViewById(R.id.edtDiary);
-        edtLocation = (EditText) findViewById(R.id.edtLocation);
         btnWrite = (Button) findViewById(R.id.btnWrite);
         btnBack = (Button) findViewById(R.id.btnBack);
+        web = (WebView) findViewById(R.id.webView);
 
         // 전송받은 선택된 날짜 저장
         sYear = getIntent().getStringExtra("selectYear");
@@ -69,21 +73,14 @@ public class ReadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 모두 입력해야함
-                if(edtLocation.getText() == null || edtDiary.getText() == null) {
-                    if(edtLocation.getText() == null){
-                        Toast.makeText(getApplicationContext(), "위치를 입력하세요",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                    if(edtDiary.getText() == null){
-                        Toast.makeText(getApplicationContext(), "일기를 입력하세요",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                if(edtDiary.getText() == null) {
+                    Toast.makeText(getApplicationContext(), "일기를 입력하세요",
+                            Toast.LENGTH_SHORT).show();
                 }else{
                     try {
-                        String diaryLoc = edtLocation.getText().toString();
                         String diaryStr = edtDiary.getText().toString();
                         FileOutputStream fos = new FileOutputStream(file);
-                        fos.write((diaryLoc + "\n" + diaryStr).getBytes());
+                        fos.write(diaryStr.getBytes());
                         fos.close();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -95,6 +92,14 @@ public class ReadActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        web.setWebViewClient(new CookWebViewClient());
+
+        WebSettings webSet = web.getSettings();
+        webSet.setBuiltInZoomControls(true);
+        webSet.setJavaScriptEnabled(true);
+        web.loadUrl("https://www.google.co.kr/maps");
+
     }
     String readDiary(String fName){
         String diaryStr = null;
@@ -108,5 +113,12 @@ public class ReadActivity extends AppCompatActivity {
         }catch (IOException ignored){
         }
         return diaryStr;
+    }
+
+    class  CookWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return super.shouldOverrideUrlLoading(view, url);
+        }
     }
 }
