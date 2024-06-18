@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +19,7 @@ import java.io.IOException;
 public class ReadActivity extends AppCompatActivity {
 
     TextView selectDate;
-    EditText edtDiary;
+    EditText edtDiary, edtLocation;
     Button btnWrite, btnBack;
     String id, sYear,sMonth,sDay,sDate;
     @Override
@@ -29,6 +30,7 @@ public class ReadActivity extends AppCompatActivity {
 
         selectDate = (TextView) findViewById(R.id.selectDate);
         edtDiary = (EditText) findViewById(R.id.edtDiary);
+        edtLocation = (EditText) findViewById(R.id.edtLocation);
         btnWrite = (Button) findViewById(R.id.btnWrite);
         btnBack = (Button) findViewById(R.id.btnBack);
 
@@ -66,13 +68,26 @@ public class ReadActivity extends AppCompatActivity {
         btnWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    String diaryStr = edtDiary.getText().toString();
-                    FileOutputStream fos = new FileOutputStream(file);
-                    fos.write(diaryStr.getBytes());
-                    fos.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                // 모두 입력해야함
+                if(edtLocation.getText() == null || edtDiary.getText() == null) {
+                    if(edtLocation.getText() == null){
+                        Toast.makeText(getApplicationContext(), "위치를 입력하세요",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    if(edtDiary.getText() == null){
+                        Toast.makeText(getApplicationContext(), "일기를 입력하세요",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    try {
+                        String diaryLoc = edtLocation.getText().toString();
+                        String diaryStr = edtDiary.getText().toString();
+                        FileOutputStream fos = new FileOutputStream(file);
+                        fos.write((diaryLoc + "\n" + diaryStr).getBytes());
+                        fos.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 Intent intent = new Intent(ReadActivity.this,
                         BasicScreen.class);
