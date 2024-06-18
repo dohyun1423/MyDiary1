@@ -3,11 +3,11 @@
  * GoogleMaps API를 이용한 다이어리 어플리케이션
 
 #### 사용 기술
-개발언어 : 자바
+  개발언어 : 자바
 
-개발도구 : AndroidStudio
+  개발도구 : AndroidStudio
 
-사용기술 : GoogleAPI
+  사용기술 : GoogleAPI
 
 ## 1. 프로젝트 소개
 #### 1-1 목적
