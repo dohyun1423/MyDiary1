@@ -119,7 +119,7 @@
             android:text="돌아가기"
             android:layout_weight="1"
             android:layout_gravity="bottom|center"
-            android:background="#555555"
+            android:background="@drawable/radius"
             android:textColor="#ffffff"/>
         <Button
             android:id="@+id/btnToDo"
@@ -128,7 +128,7 @@
             android:layout_weight="1"
             android:text="등록하기"
             android:layout_gravity="bottom|center"
-            android:background="#555555"
+            android:background="@drawable/radius"
             android:textColor="#ffffff"/>
 
     </LinearLayout>

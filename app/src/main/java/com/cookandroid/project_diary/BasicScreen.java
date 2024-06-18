@@ -3,11 +3,13 @@ package com.cookandroid.project_diary;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -120,7 +122,13 @@ public class BasicScreen extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
-        menu.add(0,1,0, "로그아웃");
+        SubMenu subMenu = menu.addSubMenu("테마 변경>>");
+        subMenu.add(0,1,0,"RED");
+        subMenu.add(0,2,0,"GREEN");
+        subMenu.add(0,3,0,"BLUE");
+        menu.add(0,4,0, "일기 보기");
+        menu.add(0,5,0, "계정 정보");
+        menu.add(0,6,0, "로그아웃");
 
         return true;
     }
@@ -129,6 +137,21 @@ public class BasicScreen extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case 1:
+                calendarView.setBackgroundColor(Color.parseColor("#ffdddd"));
+                break;
+            case 2:
+                calendarView.setBackgroundColor(Color.parseColor("#ddffdd"));
+                break;
+            case 3:
+                calendarView.setBackgroundColor(Color.parseColor("#c0e0ff"));
+                break;
+            case 4:
+                // 일기 보는 용 새로 만들기
+                break;
+            case 5:
+                // 아이디 보여주고, 기본 비번 입력, 계정 비번 변경, 회원 탈퇴
+                break;
+            case 6:
                 Intent intent = new Intent(getApplicationContext(),
                         MainActivity.class);
                 startActivity(intent);

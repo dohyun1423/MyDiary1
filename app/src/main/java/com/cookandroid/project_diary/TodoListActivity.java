@@ -64,6 +64,7 @@ public class TodoListActivity extends AppCompatActivity {
             }
         });
 
+        // 일정의 색을 정하는 버튼
         redBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,7 +83,8 @@ public class TodoListActivity extends AppCompatActivity {
                 color = "#bbffbb";
             }
         });
-
+//-------------------------------------------------------------------------------------------------------
+// 파일 생성, 일정 등록
         // 일정 파일 위치 확인, 생성하기
         // ID 받아옴
         id = getIntent().getStringExtra("ID");
@@ -107,6 +109,7 @@ public class TodoListActivity extends AppCompatActivity {
         btnToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 일정, 시간, 색이 모두 선택되었는지 확인
                 if(edtToDo.getText() == null || time == null || color == null){
                     if(edtToDo.getText() == null){
                         Toast.makeText(getApplicationContext(), "일정을 입력하세요",
@@ -125,9 +128,9 @@ public class TodoListActivity extends AppCompatActivity {
                     }
                 }else {
                     try {
-                        // 이전 내용
+                        // 이전 일정 내용
                         String todoLog = readTodo(file.toString());
-                        // 이전 내용과 합쳐서 저장
+                        // 이전의 일정 내용과 합쳐서 저장
                         String todoStr = edtToDo.getText().toString();
                         FileOutputStream fos = new FileOutputStream(file);
                         if (todoLog != null) {
@@ -148,6 +151,7 @@ public class TodoListActivity extends AppCompatActivity {
             }
         });
     }
+    // 저장된 일정 읽어오기
     String readTodo(String fName){
         String todoStr = null;
         FileInputStream inFs;
