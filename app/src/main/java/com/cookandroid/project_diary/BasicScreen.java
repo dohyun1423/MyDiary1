@@ -203,9 +203,8 @@ public class BasicScreen extends AppCompatActivity {
         subMenu.add(0,3,0,"파란색");
         subMenu.add(0,4,0,"보라색");
         subMenu.add(0,5,0,"노란색");
-        menu.add(0,6,0, "일기 보기");
-        menu.add(0,7,0, "로그아웃");
-        menu.add(0,8,0, "회원탈퇴");
+        menu.add(0,6,0, "로그아웃");
+        menu.add(0,7,0, "회원탈퇴");
 
         return true;
     }
@@ -230,15 +229,12 @@ public class BasicScreen extends AppCompatActivity {
                 changeBackgroundColor("#ffffe0");
                 break;
             case 6:
-                // 일기 보는 용 새로 만들기
-                break;
-            case 7:
-                Intent intent = new Intent(BasicScreen.this,
+                Intent intent1 = new Intent(BasicScreen.this,
                         MainActivity.class);
-                startActivity(intent);
+                startActivity(intent1);
 
                 break;
-            case 8:
+            case 7:
                 // 다이얼로그
                 AlertDialog.Builder dlg = new AlertDialog.Builder(BasicScreen.this);
                 dlg.setTitle("회원탈퇴"); //제목
