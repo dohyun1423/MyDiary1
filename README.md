@@ -78,7 +78,7 @@
 ## 3. 소개영상
 </br>
 
-[![Video Label](https://github.com/dohyun1423/MyDiary1/assets/159415410/02614e2a-ada6-464b-9bd3-bb9bfd91f028)](https://youtu.be/v=oVeT2ThEsM0)
+[![Video Label](https://github.com/dohyun1423/MyDiary1/assets/159415410/02614e2a-ada6-464b-9bd3-bb9bfd91f028)]([https://youtu.be/v=oVeT2ThEsM0](https://www.youtube.com/watch?v=oVeT2ThEsM0))
 
 
 
