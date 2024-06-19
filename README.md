@@ -78,6 +78,6 @@
 ## 3. 소개영상
 </br>
 
-[![Video Label](http://img.youtube.com/vi/uLR1RNqJ1Mw/0.jpg)](https://www.youtube.com/watch?v=oVeT2ThEsM0)
+[![Video Label](https://github.com/dohyun1423/MyDiary1/assets/159415410/d806da8c-0041-474c-a6de-5dc93ad5c62a.png)](https://www.youtube.com/watch?v=oVeT2ThEsM0)
 
 
