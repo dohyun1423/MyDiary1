@@ -76,5 +76,9 @@
 <img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/81e72220-eccd-4ca1-88ce-54e052774874.png"  width="200" height="400"/>
 
 ## 3. 소개영상
+</br>
+
+[![Video Label]()](https://youtu.be/)
+
 
 
