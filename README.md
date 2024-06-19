@@ -78,7 +78,7 @@
 ## 3. 소개영상
 </br>
 
-[![Video Label]()](https://youtu.be/)
+[![Video Label]()](https://youtu.be/v=oVeT2ThEsM0)
 
 
 
