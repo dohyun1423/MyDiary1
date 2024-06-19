@@ -38,18 +38,43 @@
 
 #### 2-2. 프로젝트 결과물
 * 로그인화면 / 회원가입 화면 / 비밀번호 찾기 화면
+</br></br>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/801b5c80-f7b0-46e4-aad9-a97c71b92b75.png"  width="200" height="400"/>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/9034e3a6-ca31-4981-9f33-990628918d5f.png"  width="200" height="400"/>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/701a7676-b706-4c1f-be52-38bcce9ea94d.png"  width="200" height="400"/>
 
-![login](https://github.com/dohyun1423/MyDiary1/assets/159415410/801b5c80-f7b0-46e4-aad9-a97c71b92b75)
 
+</br></br></br>
 * 기본 시작 화면
+</br></br>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/130094be-f9f4-44c6-9af7-73729e8ff684.png"  width="200" height="400"/>
 
-* 일정 화면 / 저장된 일정
+</br></br></br>
+* 일정 작성 화면 / 저장된 일정
+</br></br>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/18efd45a-44f9-426e-8784-0cf1f8b1aa06.png"  width="200" height="400"/>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/a819d0ca-124a-4c11-b310-2b1a18969f9a.png"  width="200" height="400"/>
 
+
+</br></br></br>
 * 일기 작성 화면 / 저장된 일기
+</br></br>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/579a4ea7-946c-4a10-8703-714804eae3e0.png"  width="200" height="400"/>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/61d31a26-3bf2-48da-9ee9-33a7b5815cf4.png"  width="200" height="400"/>
 
+</br></br></br>
 * 다이어리 색 변경
+</br></br>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/fcfabb59-3d17-4663-962d-c1929731fb9b.png"  width="200" height="400"/>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/7a163c46-f8e6-46ef-9e91-47ff33587a3d.png"  width="200" height="400"/>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/6f0831e0-4d73-45a7-a34a-4f3a15350658.png"  width="200" height="400"/>
 
+</br></br></br>
 * 로그아웃 / 회원 탈퇴
+</br></br>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/34da485a-23ec-4e8b-a972-36862ae699e8.png"  width="200" height="400"/>
+<img src="https://github.com/dohyun1423/MyDiary1/assets/159415410/81e72220-eccd-4ca1-88ce-54e052774874.png"  width="200" height="400"/>
+
 
 
 
