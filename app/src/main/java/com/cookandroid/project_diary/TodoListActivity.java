@@ -48,7 +48,8 @@ public class TodoListActivity extends AppCompatActivity {
         sDay = getIntent().getStringExtra("selectDay");
         sDate = sYear + "_" + sMonth + "_" + sDay;
         selectDate.setText(sDate);
-        
+
+        // 시간 저장
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, int hour, int minute) {
@@ -60,7 +61,6 @@ public class TodoListActivity extends AppCompatActivity {
                     time = "오전" + Integer.toString(hour) + "시" +
                             Integer.toString(minute) + "분";
                 }
-
             }
         });
 
@@ -134,7 +134,8 @@ public class TodoListActivity extends AppCompatActivity {
                         String todoStr = edtToDo.getText().toString();
                         FileOutputStream fos = new FileOutputStream(file);
                         if (todoLog != null) {
-                            fos.write((todoLog + "\n" + time + "\n" + color + "\n" + todoStr).getBytes());
+                            fos.write((todoLog + "\n" + time + "\n" + color + "\n" +
+                                    todoStr).getBytes());
                             fos.close();
                         } else {
                             fos.write((time + "\n" + color + "\n" + todoStr).getBytes());

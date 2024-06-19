@@ -45,8 +45,10 @@
         </activity>
         <activity android:name=".BasicScreen" android:label="My Diary" />
         <activity android:name=".FindPassword" android:label="비밀번호 찾기"/>
-        <activity android:name=".ReadActivity" android:label="일기쓰기"/>
-        <activity android:name=".TodoListActivity" android:label="일정쓰기"/>
+        <activity android:name=".ReadActivity" android:label="일기 작성"/>
+        <activity android:name=".TodoListActivity" android:label="일정 작성"/>
+        <activity android:name=".CheckPassword" android:label="회원 탈퇴"/>
+        <activity android:name=".ShowDiaryActivity" android:label="일기 보여주기"/>
 
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyDqOKw8v6McyU7hT3yjxy-TRkCsRQf6HnY"/>
     </application>

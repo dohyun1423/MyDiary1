@@ -90,7 +90,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     tools:ignore="SpeakableTextPresentCheck"
-                    android:background="#ffbbbb"/>
+                    android:background="#ffdddd"/>
                 <Button
                     android:id="@+id/blueBtn"
                     android:layout_width="50dp"
@@ -98,13 +98,13 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
                     tools:ignore="SpeakableTextPresentCheck"
-                    android:background="#bbbbff"/>
+                    android:background="#ddddff"/>
                 <Button
                     android:id="@+id/greenBtn"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     tools:ignore="SpeakableTextPresentCheck"
-                    android:background="#bbffbb"/>
+                    android:background="#ddffdd"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

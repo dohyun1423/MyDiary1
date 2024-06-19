@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 File folder = new File(getFilesDir(), "ID");
                 File fId = new File(folder, id);
                 if (!fId.exists()) {
-                    Toast.makeText(getApplicationContext(), "아이디가 없습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
                 }else {   // 아이디가 맞을 때
                     String pwd = checkPassword(id);
                     if (passwd.equals(pwd)) { //비밀번호가 맞다면

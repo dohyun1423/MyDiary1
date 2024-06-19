@@ -1,7 +1,10 @@
 package com.cookandroid.project_diary;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.ColorSpace;
 import android.graphics.Typeface;
@@ -16,6 +19,7 @@ import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,17 +27,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 
 public class BasicScreen extends AppCompatActivity {
 
-    Button btnToDo, btnDiary;
+    Button btnToDo, btnDiary, btnDel;
     TextView nowDate;
     CalendarView calendarView;
     String selectYear, selectMonth, selectDay, id;
-    LinearLayout linearLayout;
-
+    LinearLayout linearLayout, nowLayout;
+    // 삭제를 위한 변수
+    int idToDelete = 0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -42,9 +49,11 @@ public class BasicScreen extends AppCompatActivity {
 
         btnToDo = (Button) findViewById(R.id.btnToDo);
         btnDiary = (Button) findViewById(R.id.btnDiary);
+        btnDel = (Button) findViewById(R.id.btnDel);
         nowDate = (TextView) findViewById(R.id.nowDate);
-        calendarView = (CalendarView) findViewById(R.id.calenderView);
+        calendarView = (CalendarView) findViewById(R.id.calendarView);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        nowLayout = (LinearLayout) findViewById(R.id.nowLayout);
 
         //id 받아오기
         id = getIntent().getStringExtra("ID");
@@ -56,9 +65,17 @@ public class BasicScreen extends AppCompatActivity {
         int cDay = cal.get(Calendar.DAY_OF_MONTH);
         //오늘 날짜 출력
         String today = cYear + "." + cMonth + "." + cDay;
-        nowDate.setText("Today " + today);
+        nowDate.setText(id + "님 반갑습니다.\n Today " + today);
 
+        // 오늘 날짜를 선택된 상태로 설정
+        calendarView.setDate(cal.getTimeInMillis(), false, true);
+        selectYear = Integer.toString(cYear);
+        selectMonth = Integer.toString(cMonth);
+        selectDay = Integer.toString(cDay);
+        showTodoList(selectYear + "_" + selectMonth + "_" + selectDay, id);
 
+        // 저장된 배경색 불러오기
+        loadBackgroundColor();
 
         // 선택된 날짜 저장
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -74,16 +91,72 @@ public class BasicScreen extends AppCompatActivity {
             }
         });
 
+        // 일정 삭제
+        btnDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 한 줄 삭제
+                deleteTextViewById(idToDelete);
+                idToDelete += 3;
+                // 경로지정
+                File folder = new File(getFilesDir(), "ID/" + id + "/todo");
+                File file = new File(folder + "/" + selectYear + "_" + selectMonth + "_" + selectDay + ".txt");
+
+                // 파일 존재 여부 확인
+                if (file.exists()) {
+                    // 파일 내용 읽어오기
+                    String todoLog = readTodo(file.toString());
+
+                    // 파일이 null이 아닌 경우에만 처리
+                    if (todoLog != null) {
+                        // 저장된 내용 \n으로 분리
+                        String[] lines = todoLog.split("\n");
+
+                        // 마지막 세 줄 제외하고 모두 삭제
+                        StringBuilder updatedContent = new StringBuilder();
+                        int linesToKeep = lines.length - 3;
+                        for (int i = 0; i < linesToKeep; i++) {
+                            updatedContent.append(lines[i]);
+                            if (i < linesToKeep - 1) {
+                                updatedContent.append("\n");
+                            }
+                        }
+
+                        try {
+                            FileOutputStream fos = new FileOutputStream(file);
+                            fos.write(updatedContent.toString().getBytes());
+                            fos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            // 파일 쓰기 실패 처리
+                            Toast.makeText(BasicScreen.this, "일정 삭제 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        // 파일을 다시 읽어서 공백 여부 확인 후 파일 삭제
+                        todoLog = readTodo(file.toString());
+                        if (todoLog != null && todoLog.trim().isEmpty()) {
+                            boolean deleteSuccess = file.delete();
+                            if (deleteSuccess) {
+                                Toast.makeText(BasicScreen.this, "일정이 모두 삭제되어 파일이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(BasicScreen.this, "일정이 모두 삭제되었지만 파일 삭제에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } else {
+                        // 파일 읽기 실패 처리
+                        Toast.makeText(BasicScreen.this, "일정을 읽어오지 못했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // 파일이 존재하지 않을 경우 처리
+                    Toast.makeText(BasicScreen.this, "삭제할 일정이 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         // todolist에 선택된 날짜 전송
         btnToDo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 날짜가 선택이 되지 않았으면 오늘 날짜
-                if(selectYear == null || selectMonth == null || selectDay==null){
-                    selectYear = Integer.toString(cYear);
-                    selectMonth = Integer.toString(cMonth);
-                    selectDay = Integer.toString(cDay);
-                }
                 // 선택된 날짜 정보 전송
                 Intent intent = new Intent(BasicScreen.this, TodoListActivity.class);
                 intent.putExtra("selectYear", selectYear);
@@ -119,16 +192,20 @@ public class BasicScreen extends AppCompatActivity {
 
 
     }
+//----------------------------------------------------------------------------------------------------------
+    // 메뉴 설정
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
         SubMenu subMenu = menu.addSubMenu("테마 변경>>");
-        subMenu.add(0,1,0,"RED");
-        subMenu.add(0,2,0,"GREEN");
-        subMenu.add(0,3,0,"BLUE");
-        menu.add(0,4,0, "일기 보기");
-        menu.add(0,5,0, "계정 정보");
-        menu.add(0,6,0, "로그아웃");
+        subMenu.add(0,1,0,"빨간색");
+        subMenu.add(0,2,0,"초록색");
+        subMenu.add(0,3,0,"파란색");
+        subMenu.add(0,4,0,"보라색");
+        subMenu.add(0,5,0,"노란색");
+        menu.add(0,6,0, "일기 보기");
+        menu.add(0,7,0, "로그아웃");
+        menu.add(0,8,0, "회원탈퇴");
 
         return true;
     }
@@ -136,30 +213,58 @@ public class BasicScreen extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
+            // 배경 설정
             case 1:
-                calendarView.setBackgroundColor(Color.parseColor("#ffdddd"));
+                changeBackgroundColor("#ffdddd");
                 break;
             case 2:
-                calendarView.setBackgroundColor(Color.parseColor("#ddffdd"));
+                changeBackgroundColor("#ddffdd");
                 break;
             case 3:
-                calendarView.setBackgroundColor(Color.parseColor("#c0e0ff"));
+                changeBackgroundColor("#c0e0ff");
                 break;
             case 4:
-                // 일기 보는 용 새로 만들기
+                changeBackgroundColor("#ddddff");
                 break;
             case 5:
-                // 아이디 보여주고, 기본 비번 입력, 계정 비번 변경, 회원 탈퇴
+                changeBackgroundColor("#ffffe0");
                 break;
             case 6:
-                Intent intent = new Intent(getApplicationContext(),
+                // 일기 보는 용 새로 만들기
+                break;
+            case 7:
+                Intent intent = new Intent(BasicScreen.this,
                         MainActivity.class);
                 startActivity(intent);
+
                 break;
+            case 8:
+                // 다이얼로그
+                AlertDialog.Builder dlg = new AlertDialog.Builder(BasicScreen.this);
+                dlg.setTitle("회원탈퇴"); //제목
+                dlg.setMessage("정말 탈퇴하시겠습니까?"); // 메시지
+                dlg.setIcon(R.drawable.appdiary); // 아이콘 설정
+                // 버튼 클릭시 동작
+                dlg.setPositiveButton("확인",new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(BasicScreen.this,
+                                CheckPassword.class);
+                        // checked_password로 ID 인탠트
+                        intent.putExtra("ID", id);
+                        startActivity(intent);
+                    }
+                });
+                dlg.setNegativeButton("취소",new DialogInterface.OnClickListener(){
+                    public void onClick(DialogInterface dialog, int which) {}
+                });
+                dlg.show();
+
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
-
+//----------------------------------------------------------------------------------------------------------
     // 해당 날짜에 저장된 일정을 보여주는 메소드
     void showTodoList (String day, String id){
         // 기존 레이아웃의 자식 뷰 제거
@@ -187,6 +292,7 @@ public class BasicScreen extends AppCompatActivity {
                 Typeface typeFace = Typeface.createFromAsset(getAssets(),"bmyeonsung_ttf.ttf");
                 view1.setTypeface(typeFace);
                 view1.setHeight(100);
+                view1.setId(i);
                 view1.setPadding(10,10,10,10);
                 view1.setTextColor(Color.BLACK);
 
@@ -201,7 +307,7 @@ public class BasicScreen extends AppCompatActivity {
             }
         }
     }
-
+//----------------------------------------------------------------------------------------------------------
     String readTodo(String fName){
         String todoStr = null;
         FileInputStream inFs;
@@ -214,5 +320,37 @@ public class BasicScreen extends AppCompatActivity {
         }catch (IOException ignored){
         }
         return todoStr;
+    }
+
+    // 배경색 변경 메소드
+    private void changeBackgroundColor(String color) {
+        calendarView.setBackgroundColor(Color.parseColor(color));
+        nowDate.setBackgroundColor(Color.parseColor(color));
+        nowLayout.setBackgroundColor(Color.parseColor(color));
+        saveBackgroundColor(color); // 선택한 색상을 저장
+    }
+
+    // 배경색 저장 메소드
+    private void saveBackgroundColor(String color) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyDiaryPrefs" + id, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("calendar_bg_color", color);
+        editor.apply();
+    }
+
+    // 저장된 배경색 불러오기 메소드
+    private void loadBackgroundColor() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyDiaryPrefs" + id, MODE_PRIVATE);
+        String color = sharedPreferences.getString("calendar_bg_color", "#c0e0ff"); // 기본값은 파란색
+        calendarView.setBackgroundColor(Color.parseColor(color));
+        nowDate.setBackgroundColor(Color.parseColor(color));
+        nowLayout.setBackgroundColor(Color.parseColor(color));
+    }
+
+    void deleteTextViewById(int id) {
+        View viewToRemove = linearLayout.findViewById(id);
+        if (viewToRemove != null && viewToRemove instanceof TextView) {
+            linearLayout.removeView(viewToRemove);
+        }
     }
 }
